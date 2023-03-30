@@ -1,3 +1,4 @@
+import { writeData } from "./firebase.js";
 const $container = document.querySelector(".container");
 const $cardFront = document.querySelectorAll(".cardFront");
 const $cardBack = document.querySelectorAll(".card_back");
@@ -10,11 +11,15 @@ const $audioBtn = document.querySelector(".audioBtn");
 const $recordModal = document.querySelector(".modal-wrapper.record");
 const $timeRecord = document.querySelector(".time-record");
 const $recordBtn = document.querySelector(".record-btn");
+const $inputMsg = document.querySelector(".input-msg");
+const $inputName = document.querySelector(".input-name");
 const $recordCancelBtn = document.querySelector(".cancel-btn");
+const $errMsg = document.querySelector(".err-msg");
+const $errName = document.querySelector(".err-name");
 /* 카드 행 열 지정 곱 => 짝수만 가능 홀수 시 짝이 안맞음 너무 큰 수를 지정하면 화면에서 벗어남 */ 
 const level = {"lv1":{row:"4",col:"3",}, "lv2":{row:"5",col:"4"},"lv3":{row:'6',col:"5"}};
-const row = level.lv1.row;
-const col = level.lv1.col;
+const row = level.lv3.row;
+const col = level.lv3.col;
 const totalCard = row * col;
 const animal = ['🐒','🦍','🐈','🐇','🐎','🦌','🦏','🐄','🦔','🐖','🐑','🐪','🦘','🐘','🐁','🦥'];
 const cardArray = [];
@@ -30,14 +35,12 @@ bgm.src = "../audio/game_bgm.mp3";
 bgm.volume = 0.3;
 bgm.loop = true;
 bgm.muted = true;
-let isStop = false;
 let checked = false;
 let startTime = 0;
 let totalTime = 0;
-let isMute = false;
 let timeInterval;
 
-/* 버튼 클릭 이벤트 함수 추가 */
+/* 이벤트 함수 추가 */
 $startBtn.addEventListener("click", () => {
   $modal.classList.toggle("active");
   startGame();
@@ -50,6 +53,35 @@ $resetBtn.addEventListener("click", resetGame);
 $recordCancelBtn.addEventListener("click",()=>{
   $recordModal.classList.toggle("active");
 });
+$recordBtn.addEventListener('click',()=>{
+  if($inputName.value.length===0){
+    $errName.classList.add("active");
+  }
+  if($inputMsg.value.length===0||$inputMsg.value.replace(/ /g,"").length===0){
+    $errMsg.classList.add("active");
+  }
+  console.log($inputMsg.value)
+  console.log($inputName.value)
+  // 파이어베이스 데이터 전송
+  const data = {name:$inputName.value, massage: $inputMsg.value, date: new Date().toLocaleDateString()}
+  writeData(data);
+})
+$inputMsg.addEventListener('input',(e)=>{
+  $inputMsg.value = e.target.value;
+  if($inputMsg.value.replace(/ /g,"").length===0){
+    $errMsg.classList.add("active")
+    return;
+  }
+  $errMsg.classList.remove("active");
+})
+$inputName.addEventListener('input',(e)=>{
+  $inputName.value = e.target.value.replace(/ /g, "");
+  if($inputName.value.length===0){
+    $errName.classList.add("active")
+    return;
+  }
+  $errName.classList.remove("active");
+})
 
 function startGame() {
   $container.style.gridTemplateColumns = `repeat(${row}, 150px)`;

@@ -145,7 +145,16 @@ body{
     transform: translate(-50%,-50%);
     animation: scaleUp 5s;
 }
-
+.err-msg, .err-name{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: salmon;
+    display: none;
+}
+.err-name.active, .err-msg.active{
+    display: block;
+}
 @keyframes scaleUp {
     from{
         scale: (.5);
