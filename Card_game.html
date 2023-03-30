@@ -1,31 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <title>
-        
-    </title>
-    <head>
-        <link rel="stylesheet" href="./css/style.css">
-    </head>
+  <title> </title>
+  <head>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
 </html>
 <body>
-    <div class="timer-box">
-        ⏰ Time : <span>0</span>
+  <div class="timer-box">⏰ Time : <span>0</span></div>
+  <div class="gameBtn-box">
+    <button class="audioBtn mute" type="button"></button>
+    <button class="reset-btn" type="button"></button>
+  </div>
+  <div class="container">
+    <!--card-->
+  </div>
+  <div class="modal-wrapper gamestart active">
+    <button class="start-btn">게임시작</button>
+  </div>
+  <div class="modal-wrapper record">
+    <div class="modal-record">
+      <h2>게임결과</h2>
+      <h3>⏰ 총 기록 : <strong class="time-record">60</strong>초 </h3>
+      <p>기록 등록을 원하신다면 정보 입력 후 확인을 눌러주세요.</p>
+      <form class="record-form">
+        <label for="" class="a11y">이름</label>
+        <input class="input-name" type="text" placeholder="이름" maxlength="5"/>
+        <label for="" class="a11y">한 줄 메세지</label>
+        <input
+          class="input-msg"
+          type="text"
+          placeholder="한 줄 메세지"
+          maxlength="25"
+        />
+        <div class="recordBtn-box">
+          <button class="record-btn" type="button">확인</button>
+          <button class="cancel-btn" type="button">취소</button>
+        </div>
+      </form>
     </div>
-    <div class="button-box">
-        <button class="audioBtn"></button>
-        <button class="reset-btn">
-        </button>
-    </div>
-    <div class="container">
-        <!--card -->
-    </div>
-    <div class="modal">
-        <button class="start-btn">
-            게임시작
-        </button>
-    </div>
-    <script src="main.js"></script>
-    <script>
-      
-    </script>
+  </div>
+  <script src="main.js"></script>
 </body>
