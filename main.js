@@ -23,11 +23,13 @@ const $rankingLv2Btn = document.querySelector(".lv2-btn");
 const $rankingLv3Btn = document.querySelector(".lv3-btn");
 const $rankingBtn = document.querySelector(".ranking-btn");
 const $modalRank = document.querySelector(".modal-rank");
-const $closeBtn = document.querySelector(".close-btn");
+const $rankCloseBtn = document.querySelector(".modal-rank .close-btn");
 const $pauseBtn = document.querySelector(".pause-btn");
 const $loadBtn = document.querySelector(".load-btn");
 const $rankTitleLevel = document.querySelector(".rankTitle-level");
 const $gameGudieBtn = document.querySelector(".gameGudie-btn");
+const $modalGameGuide = document.querySelector(".modal-guide");
+const $guideCloseBtn = document.querySelector(".modal-guide .close-btn");
 
 /* 카드 행 열 지정 곱 => 짝수만 가능 홀수 시 짝이 안맞음 너무 큰 수를 지정하면 화면에서 벗어남 */ 
 const levelData = [{row:"4",col:"3",}, {row:"5",col:"4"},{row:'6',col:"5"}];
@@ -58,14 +60,17 @@ let totalPauseTime = 0;
 setRaking(1);
 
 $gameGudieBtn.addEventListener('click',()=>{
-  
+  $modalGameGuide.classList.toggle("active");
+})
+$guideCloseBtn.addEventListener('click',()=>{
+  $modalGameGuide.classList.toggle("active");
 })
 $loadBtn.addEventListener('click',()=>{
   clearInterval(timeInterval);
   body.style.overflow = 'auto';
   $modal.classList.remove('active');
-  bgm.play();
   if(completedCard.length===totalCard) return;
+  bgm.play();
   endPauseTime = new Date().getTime();
   totalPauseTime += (endPauseTime - startPauseTime) 
   timeInterval = setInterval(() => {
@@ -87,7 +92,7 @@ $pauseBtn.addEventListener('click',()=>{
   $startBtn.removeEventListener('click', startGame);
   $startBtn.addEventListener('click', resetGame);
 })
-$closeBtn.addEventListener('click',()=>{
+$rankCloseBtn.addEventListener('click',()=>{
   $modalRank.classList.toggle("active");
 })
 $rankingBtn.addEventListener('click',()=>{
@@ -147,18 +152,21 @@ $levelNextBtn.addEventListener('click',()=>{
   row = levelData[level].row;
   col = levelData[level].col;
   totalCard = row * col;
-  console.log(row,col);
-  console.log(level);
-  $levelNum.innerHTML = (level===0 ? '쉬움' : (level===1 ? '보통' : '어려움'));
+  $levelNum.innerHTML = level===1 ? '보통' : '어려움';
+  $levelNum.style.color = level ===1 ? "gold" : "red";
+  $levelNextBtn.style.backgroundImage =  `url('../img/nextBtn${level===1 ? "" : "2"}.png`;
+  $levelPrevBtn.style.backgroundImage =  `url('../img/prevBtn${level===1 ? "" : ""}.png`;
 })
 $levelPrevBtn.addEventListener('click',()=>{
   if(level===0) return;
   level--;
-  console.log(level);
   row = levelData[level].row;
   col = levelData[level].col;
   totalCard = row * col;
-  $levelNum.innerHTML = (level===0 ? '쉬움' : (level===1 ? '보통' : '어려움'));
+  $levelNum.innerHTML = level===0 ? '쉬움' : '보통';
+  $levelNum.style.color = level ===0 ? "yellowgreen" : "gold";
+  $levelNextBtn.style.backgroundImage =  `url('../img/nextBtn.png')`;
+  $levelPrevBtn.style.backgroundImage =  `url('../img/prevBtn${level===1 ? "" : "2"}.png')`;
 })
 
 export const getCreatedAt = (unixTime) => {
@@ -197,6 +205,7 @@ $recordBtn.addEventListener('click',()=>{
   $inputName.value = "";
   $inputMsg.value = "";
   $recordModal.classList.remove("active");
+  $modalRank.classList.toggle("active");
 })
 $inputMsg.addEventListener('input',(e)=>{
   $inputMsg.value = e.target.value;
@@ -229,7 +238,8 @@ function startGame() {
   $container.style.pointerEvents = "none";
   cardSetting();
   bgm.play();
-
+  $pauseBtn.style.pointerEvents = 'none';
+  $resetBtn.style.pointerEvents = 'none';
   setTimeout(() => {
     let card = document.querySelectorAll(".card");
     playSound(soundArray2);
@@ -244,7 +254,11 @@ function startGame() {
       ).toFixed(2);
       $timer.innerHTML = Math.floor(totalTime);
     }, 10);
-  }, 1200);
+  }, 800);
+  setTimeout(()=>{
+    $pauseBtn.style.pointerEvents = 'auto';
+    $resetBtn.style.pointerEvents = 'auto';
+},1000)
 }
 
 /*-------------------------------------카드 설정 관련 함수-------------------------------------*/
@@ -369,7 +383,6 @@ function playSound(sound) {
 
 // 게임 리셋 함수
 function resetGame() {
-  $resetBtn.style.pointerEvents = 'none';
   bgm.pause();
   bgm.load();
   cardArray.splice(0);
@@ -386,6 +399,5 @@ function resetGame() {
   }
   startGame();
   $modal.classList.remove("active");
-  setTimeout(()=>{  $resetBtn.style.pointerEvents = 'auto';}, 1200)
 
 }

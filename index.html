@@ -21,50 +21,59 @@
     <div class="button-box">
     <div class="level-box">
       <h2>난이도 선택</h2>
-      <button class="prev-btn"><</button>
+      <button class="prev-btn"></button>
       <span class="level">쉬움</span>
-      <button class="next-btn">></button>
+      <button class="next-btn"></button>
     </div>
     <button class="start-btn">게임시작</button>
     <button class="ranking-btn">랭킹보기</button>
     <button class="load-btn">이어하기</button>
     <button class="gameGudie-btn">게임방법</button>
   </div>
-    <div class="modal-rank">
-      <h2>🏆 기록순위 Top100</h2>
-      <button class="close-btn">X</button>
-      <h3 class="rankTitle-level">😀 쉬움</h3>
-      <div class="lvBtn-box">
-        <button class="lv1-btn">쉬움</button>
-        <button class="lv2-btn">보통</button>
-        <button class="lv3-btn">어려움</button>
-      </div>
-      <table class="ranking-table">
-        <tbody class="ranking-tbody">
-          <tr>
-            <th>순위</th>
-            <th>기록</th>
-            <th>이름</th>
-            <th>메세지</th>
-            <th>날짜</th>
-          </tr>
-            <!--rankingData -->
-        </tbody>
-      </table>
-    </div>
   </div>
-  <div class="modal-wrapper record active">
+  <div class="modal-rank">
+    <h2>🏆 기록순위 Top100</h2>
+    <button class="close-btn">X</button>
+    <h3 class="rankTitle-level">😀 쉬움</h3>
+    <div class="lvBtn-box">
+      <button class="lv1-btn">쉬움</button>
+      <button class="lv2-btn">보통</button>
+      <button class="lv3-btn">어려움</button>
+    </div>
+    <table class="ranking-table">
+      <tbody class="ranking-tbody">
+        <tr>
+          <th>순위</th>
+          <th>기록</th>
+          <th>이름</th>
+          <th>메세지</th>
+          <th>날짜</th>
+        </tr>
+          <!--rankingData -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-guide">
+    <h2 class="guide-title">🎮 게임방법</h2>
+    <ul class="guide-lists">
+      <li>카드를 클릭하여 카드 2개의 짝을 맞추는 게임입니다.</li>
+      <li>모든 카드의 짝을 맞추면 게임이 종료되고 시간이 기록됩니다.</li>
+      <li>게임시작 전 난이도를 고를 수 있으며, 쉬움, 보통, 어려움 3가지 난이도가 존재합니다.</li>
+      <li>게임 진행중 설정(톱니바퀴) 버튼을 누르면 시작화면으로 돌아가고, 게임이 일시정지 됩니다.</li>
+      <li>같은 난이도로 게임을 다시 하고 싶다면 게임화면에서 다시하기 버튼(회전 화살표)을 누르면 됩니다.</li>
+      <li>다른 난이도로 게임을 다시 하고 싶다면 설정 버튼을 눌러 시작화면으로 돌아가 난이도 변경 후 시작하면 됩니다.</li>
+      <li>스피커 버튼을 누르면 소리를 끄고, 켤 수 있습니다.</li>
+    </ul>
+    <button class="close-btn">X</button>
+  </div>
+
+  <div class="modal-wrapper record">
     <div class="modal-record">
-<<<<<<< HEAD
       <h2>✨ 게임결과</h2>
       <h3>⏰ 총 기록 : <strong class="time-record">60</strong>초 </h3>
       <p>기록 등록을 원하신다면 정보 입력 후<br>
         확인을 눌러주세요.</p>
-=======
-      <h2>게임결과</h2>
-      <h3>⏰ 총 기록 : <strong class="time-record">0</strong>초 </h3>
-      <p>기록 등록을 원하신다면 정보 입력 후 확인을 눌러주세요.</p>
->>>>>>> f36abf870622aeec4b6468c64ef0a74f4ab92726
       <form class="record-form">
         <div>
           <label for="" class="a11y">이름</label>
