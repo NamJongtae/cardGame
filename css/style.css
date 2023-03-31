@@ -11,12 +11,14 @@
     text-decoration: none;
     font-family: 'TheJamsil5Bold', sans-serif;
 }
+ul,li{
+    list-style-type: none;
+}
 body{
     background-color: salmon;
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 }
 .container{
     margin-top: 50px;
@@ -85,7 +87,7 @@ body{
     font-weight: 700;
 }
 .modal-wrapper{
-    position: absolute;
+    position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.8);
     display: none;
@@ -93,17 +95,26 @@ body{
 .modal-wrapper.active{
     display: block;
 }
-.start-btn{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+.game-title{
+    font-size: 40px;
+    text-align: center;
+    color: royalblue;
+    margin: 50px 0px;
+}
+.start-btn, 
+.ranking-btn,
+.load-btn,
+.gameGudie-btn{
     padding: 15px 40px;
     border-radius: 20px;
     font-size: 40px;
     font-weight: bold;
     background-color: gold;
+    border: none;
     cursor: pointer;
+}
+.load-btn{
+    display: none;
 }
 .gameBtn-box{
     width: 100%;
@@ -132,6 +143,11 @@ body{
    background: url(../img/resetBtn.png) no-repeat center / 30px;
    width: 70px;
    height: 50px;
+}
+.pause-btn{
+    background: url(../img/pauseBtn.png) no-repeat center / 30px;
+    width: 70px;
+    height: 50px;
 }
 .modal-record{
     position: absolute;
@@ -227,7 +243,111 @@ body{
     padding: 0;
     position: absolute;
 }
-
+.modal-rank{
+    position: absolute;
+    background-color: #fff;
+    width: 1000px;
+    height: 800px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    padding: 20px;
+    box-sizing: border-box;
+    display: none;
+}
+.modal-rank.active{
+    display: block;
+}
+.lvBtn-box{
+    margin-bottom: 20px;
+    float: right;
+}
+.lvBtn-box button{
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: powderblue;
+    border: 0;
+    border-radius: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.modal-rank h2{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 30px;
+    
+}
+.modal-rank h3{
+    font-size: 30px;
+    display: inline-block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.ranking-table{
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+}
+.ranking-table th{
+    background-color: #eee;
+}
+.ranking-table tr,td,th {
+    border: 1px solid black;
+    font-size: 14px;
+    padding: 5px 0px;
+}
+.ranking-table th:nth-child(3){
+    width: 15%;
+}
+.ranking-table th:nth-child(4){
+    width: 40%;
+}
+.ranking-table th:nth-child(5){
+    width: 20%;
+}
+.ranking-table tr:not(:first-child) td:nth-child(5){
+    color: gray;
+}
+.level-box{
+    margin-bottom: 20px;
+}
+.level-box h2{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.level-box button{
+    font-size: 30px;
+    padding: 20px;
+    cursor: pointer;
+}
+.level-box span{
+    display: inline-block;
+    width: 90px;
+    text-align: center;
+    font-size: 30px;
+    margin: 0 20px;
+    color: #fff;
+}
+.modal-wrapper.gamestart .button-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.close-btn{
+    border: 0;
+    background: none;
+    font-size: 30px;
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    cursor: pointer;
+}
 @keyframes a {
     to{
         background-image:url('../img/card_back.png') ;

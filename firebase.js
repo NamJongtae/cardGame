@@ -1,8 +1,7 @@
-
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
-  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js"
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,9 +21,27 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  const db = getDatabase(app);
-      export function writeData(data) {
-            set(ref(db, 'ranking/2'),{
-                data
-            })
-          }
+  const db = getFirestore(app);
+
+  export async function getRankingData(level) {
+    const ranking = collection(db, `ranking${level}`);
+    const q = query(
+      ranking,
+      orderBy("record", "desc"),
+      orderBy("createdAt", "desc"),
+      limit(100)
+    );
+    const res = await getDocs(q);
+    const datas = res.docs.map((el) => el.data());
+    
+    return datas;
+  }
+
+ export async function writeData(data){
+  await addDoc(collection(db, "ranking"+(parseInt(data.level)+1)), {
+    ...data
+  });
+
+
+
+  }

@@ -1,11 +1,9 @@
-import { writeData } from "./firebase.js";
+import { writeData, getRankingData } from "./firebase.js";
+const body = document.querySelector("body");
 const $container = document.querySelector(".container");
-const $cardFront = document.querySelectorAll(".cardFront");
-const $cardBack = document.querySelectorAll(".card_back");
 const $timer = document.querySelector(".timer-box span");
 const $startBtn = document.querySelector(".start-btn");
 const $modal = document.querySelector(".modal-wrapper.gamestart");
-const $stopBtn = document.querySelector(".stop-btn");
 const $resetBtn = document.querySelector(".reset-btn");
 const $audioBtn = document.querySelector(".audioBtn");
 const $recordModal = document.querySelector(".modal-wrapper.record");
@@ -16,11 +14,27 @@ const $inputName = document.querySelector(".input-name");
 const $recordCancelBtn = document.querySelector(".cancel-btn");
 const $errMsg = document.querySelector(".err-msg");
 const $errName = document.querySelector(".err-name");
+const $rakingTbale = document.querySelector(".ranking-tbody");
+const $levelPrevBtn = document.querySelector(".level-box .prev-btn");
+const $levelNextBtn = document.querySelector(".level-box .next-btn");
+const $levelNum = document.querySelector(".level-box .level");
+const $rankingLv1Btn = document.querySelector(".lv1-btn");
+const $rankingLv2Btn = document.querySelector(".lv2-btn");
+const $rankingLv3Btn = document.querySelector(".lv3-btn");
+const $rankingBtn = document.querySelector(".ranking-btn");
+const $modalRank = document.querySelector(".modal-rank");
+const $closeBtn = document.querySelector(".close-btn");
+const $pauseBtn = document.querySelector(".pause-btn");
+const $loadBtn = document.querySelector(".load-btn");
+const $rankTitleLevel = document.querySelector(".rankTitle-level");
+const $gameGudieBtn = document.querySelector(".gameGudie-btn");
+
 /* 카드 행 열 지정 곱 => 짝수만 가능 홀수 시 짝이 안맞음 너무 큰 수를 지정하면 화면에서 벗어남 */ 
-const level = {"lv1":{row:"4",col:"3",}, "lv2":{row:"5",col:"4"},"lv3":{row:'6',col:"5"}};
-const row = level.lv3.row;
-const col = level.lv3.col;
-const totalCard = row * col;
+const levelData = [{row:"4",col:"3",}, {row:"5",col:"4"},{row:'6',col:"5"}];
+let level = 0;
+let row = levelData[level].row;
+let col = levelData[level].col;
+let totalCard = row * col;
 const animal = ['🐒','🦍','🐈','🐇','🐎','🦌','🦏','🐄','🦔','🐖','🐑','🐪','🦘','🐘','🐁','🦥'];
 const cardArray = [];
 const completedCard = [];
@@ -29,7 +43,6 @@ const randomArray2 = [];
 const soundArray = [];
 const soundArray2 = [];
 const soundArray3 = [];
-
 const bgm = new Audio();
 bgm.src = "../audio/game_bgm.mp3";
 bgm.volume = 0.3;
@@ -39,12 +52,124 @@ let checked = false;
 let startTime = 0;
 let totalTime = 0;
 let timeInterval;
+let startPauseTime = 0;
+let endPauseTime = 0;
+let totalPauseTime = 0;
+setRaking(1);
 
+$gameGudieBtn.addEventListener('click',()=>{
+  
+})
+$loadBtn.addEventListener('click',()=>{
+  clearInterval(timeInterval);
+  body.style.overflow = 'auto';
+  $modal.classList.remove('active');
+  endPauseTime = new Date().getTime();
+  totalPauseTime += (endPauseTime - startPauseTime) 
+  timeInterval = setInterval(() => {
+    totalTime = (
+      ((new Date().getTime() - startTime) 
+    - totalPauseTime) / 1000).toFixed(2);
+    if(totalTime<0) totalTime = 0;
+    $timer.innerHTML = Math.floor(totalTime);
+  }, 10);
+})
+$pauseBtn.addEventListener('click',()=>{
+  clearInterval(timeInterval);
+  body.style.overflow = 'hidden';
+  $modal.classList.add('active');
+  startPauseTime = new Date().getTime();
+  $loadBtn.style.display = 'inline-block';
+  $startBtn.innerHTML = "다시하기";
+  $startBtn.removeEventListener('click', startGame);
+  $startBtn.addEventListener('click', resetGame);
+})
+$closeBtn.addEventListener('click',()=>{
+  $modalRank.classList.toggle("active");
+})
+$rankingBtn.addEventListener('click',()=>{
+  $modalRank.classList.toggle("active");
+})
+$rankingLv1Btn.addEventListener('click',()=>{
+  setRaking(1);
+  $rankTitleLevel.innerHTML ='😀 쉬움';
+})
+$rankingLv2Btn.addEventListener('click',()=>{
+  setRaking(2);
+  $rankTitleLevel.innerHTML ='⚠️ 보통';
+})
+$rankingLv3Btn.addEventListener('click',()=>{
+  setRaking(3);
+  $rankTitleLevel.innerHTML ='☢️ 어려움';
+})
+async function setRaking(lvBtnNum) {
+  const rankingData = await getRankingData(lvBtnNum);
+  let medal ='';
+  while($rakingTbale.childElementCount!==1) {
+    $rakingTbale.lastElementChild.remove();
+  }
+  for(let i=0; i<rankingData.length; i++){
+   const rankingTr = document.createElement("tr");
+   const rank = document.createElement("td");
+   const name = document.createElement("td");
+   const record = document.createElement("td");
+   const message = document.createElement("td");
+   const createdAt = document.createElement("td");
+
+   if(i===0) medal = '🥇';
+   else if(i===1) medal = '🥈';
+   else if(i===2) medal = '🥉';
+   else medal ='';
+
+   rank.innerHTML = medal + (i+1) +'등';
+   name.innerHTML = rankingData[i].name;
+   record.innerHTML = rankingData[i].record + '초';
+   message.innerHTML = rankingData[i].message;
+   createdAt.innerHTML = getCreatedAt(rankingData[i].createdAt.seconds);
+
+   $rakingTbale.append(rankingTr);
+   rankingTr.append(rank);
+   rankingTr.append(record);
+   rankingTr.append(name);
+   rankingTr.append(message);
+   rankingTr.append(createdAt);
+  }
+ 
+}
+
+
+$levelNextBtn.addEventListener('click',()=>{
+  if(level===2) return;
+  level++;
+  row = levelData[level].row;
+  col = levelData[level].col;
+  totalCard = row * col;
+  console.log(row,col);
+  console.log(level);
+  $levelNum.innerHTML = (level===0 ? '쉬움' : (level===1 ? '보통' : '어려움'));
+})
+$levelPrevBtn.addEventListener('click',()=>{
+  if(level===0) return;
+  level--;
+  console.log(level);
+  row = levelData[level].row;
+  col = levelData[level].col;
+  totalCard = row * col;
+  $levelNum.innerHTML = (level===0 ? '쉬움' : (level===1 ? '보통' : '어려움'));
+})
+
+export const getCreatedAt = (unixTime) => {
+  const date = new Date(parseInt(unixTime)*1000);
+  const year = date.getFullYear();
+  const month = `0${(date.getMonth()+1)}`;
+  const day = `0${date.getDate()}`;
+  const hour = `0${date.getHours()}`
+  const minute = `0${date.getMinutes()}`;
+  // const second = `0${date.getSeconds()}`;
+  return `${year}-${month.slice(-2)}-${day.slice(-2)}-${hour.slice(-2)}:${minute.slice(-2)}`;
+}
 /* 이벤트 함수 추가 */
-$startBtn.addEventListener("click", () => {
-  $modal.classList.toggle("active");
-  startGame();
-});
+$startBtn.addEventListener("click", startGame);
 $audioBtn.addEventListener("click", () => {
   $audioBtn.classList.toggle("mute");
   bgm.muted = $audioBtn.classList.contains("mute") ? true : false;
@@ -56,15 +181,16 @@ $recordCancelBtn.addEventListener("click",()=>{
 $recordBtn.addEventListener('click',()=>{
   if($inputName.value.length===0){
     $errName.classList.add("active");
+    return;
   }
   if($inputMsg.value.length===0||$inputMsg.value.replace(/ /g,"").length===0){
     $errMsg.classList.add("active");
+    return;
   }
-  console.log($inputMsg.value)
-  console.log($inputName.value)
   // 파이어베이스 데이터 전송
-  const data = {name:$inputName.value, massage: $inputMsg.value, date: new Date().toLocaleDateString()}
+  const data = {name:$inputName.value, record: totalTime, message: $inputMsg.value, createdAt: new Date(), level}
   writeData(data);
+  $recordModal.classList.remove("active");
 })
 $inputMsg.addEventListener('input',(e)=>{
   $inputMsg.value = e.target.value;
@@ -84,6 +210,8 @@ $inputName.addEventListener('input',(e)=>{
 })
 
 function startGame() {
+  body.style.overflow = 'auto';
+  $modal.classList.toggle("active");
   $container.style.gridTemplateColumns = `repeat(${row}, 150px)`;
   $container.style.gridTemplateRows = `repeat(${col}, 120px)`;
   random(randomArray);
@@ -102,11 +230,11 @@ function startGame() {
     $container.style.pointerEvents = "auto"; // 게임시작 클릭 제한 해제
     startTime = new Date().getTime();
     timeInterval = setInterval(() => {
-      totalTime = Math.floor(
+      totalTime = (
         (new Date().getTime() - startTime) / 1000
-      );
-      $timer.innerHTML = totalTime;
-    }, 1000);
+      ).toFixed(2);
+      $timer.innerHTML = Math.floor(totalTime);
+    }, 10);
   }, 800);
 }
 
@@ -239,6 +367,8 @@ function resetGame() {
   completedCard.splice(0);
   randomArray.splice(0);
   randomArray2.splice(0);
+  totalTime = 0;
+  totalPauseTime = 0;
   checked = false;
   clearInterval(timeInterval);
   $timer.innerHTML = 0;
@@ -246,6 +376,7 @@ function resetGame() {
     $container.firstChild.remove();
   }
   startGame();
+  $modal.classList.remove("active");
   setTimeout(()=>{  $resetBtn.style.pointerEvents = 'auto';}, 1200)
 
 }
