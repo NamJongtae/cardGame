@@ -190,6 +190,7 @@ $recordBtn.addEventListener('click',()=>{
     $errMsg.classList.add("active");
     return;
   }
+  if(totalTime<1) {alert('비정상적인 기록입니다.'); return;}
   // 파이어베이스 데이터 전송
   const data = {name:$inputName.value, record: totalTime, message: $inputMsg.value, createdAt: new Date(), level}
   writeData(data);
