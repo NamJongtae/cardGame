@@ -207,10 +207,14 @@ body{
 .record-form{
     margin-top: 20px;
 }
+.modal-record{
+    width: 400px;
+}
 .modal-record p {
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
+    line-height: 1.5;
 }
 .modal-record label{
     font-weight: bold;
@@ -229,10 +233,12 @@ body{
     border: none;
 }
 .modal-record h2{
+    font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
 }
 .modal-record h3{
+    font-size: 25px;
     text-align: center;
     margin-bottom: 20px;
 }
