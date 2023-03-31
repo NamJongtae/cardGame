@@ -47,7 +47,7 @@ const bgm = new Audio();
 bgm.src = "../audio/game_bgm.mp3";
 bgm.volume = 0.3;
 bgm.loop = true;
-bgm.muted = true;
+bgm.muted = false;
 let checked = false;
 let startTime = 0;
 let totalTime = 0;
@@ -64,6 +64,8 @@ $loadBtn.addEventListener('click',()=>{
   clearInterval(timeInterval);
   body.style.overflow = 'auto';
   $modal.classList.remove('active');
+  bgm.play();
+  if(completedCard.length===totalCard) return;
   endPauseTime = new Date().getTime();
   totalPauseTime += (endPauseTime - startPauseTime) 
   timeInterval = setInterval(() => {
@@ -76,6 +78,7 @@ $loadBtn.addEventListener('click',()=>{
 })
 $pauseBtn.addEventListener('click',()=>{
   clearInterval(timeInterval);
+  bgm.pause();
   body.style.overflow = 'hidden';
   $modal.classList.add('active');
   startPauseTime = new Date().getTime();
@@ -190,6 +193,8 @@ $recordBtn.addEventListener('click',()=>{
   // 파이어베이스 데이터 전송
   const data = {name:$inputName.value, record: totalTime, message: $inputMsg.value, createdAt: new Date(), level}
   writeData(data);
+  $inputName.value = "";
+  $inputMsg.value = "";
   $recordModal.classList.remove("active");
 })
 $inputMsg.addEventListener('input',(e)=>{
@@ -219,11 +224,14 @@ function startGame() {
   soundSetting(soundArray, "../audio/card_effect.mp3");
   soundSetting(soundArray2, "../audio/card_effect2.mp3");
   soundSetting(soundArray3, "../audio/card_effect3.wav");
+  playSound(soundArray);;
   $container.style.pointerEvents = "none";
   cardSetting();
   bgm.play();
+
   setTimeout(() => {
     let card = document.querySelectorAll(".card");
+    playSound(soundArray2);
     for (let i = 0; i < card.length; i++) {
       card[i].classList.toggle("flipped"); // 카드 뒤집기
     }

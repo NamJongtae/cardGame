@@ -89,11 +89,14 @@ body{
 .modal-wrapper{
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     display: none;
 }
 .modal-wrapper.active{
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 .game-title{
     font-size: 40px;
@@ -337,7 +340,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
 }
 .close-btn{
     border: 0;
