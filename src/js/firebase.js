@@ -23,7 +23,7 @@
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
 
-  export async function getRankingData(level) {
+  async function getRankingData(level) {
     const ranking = collection(db, `ranking${level}`);
     const q = query(
       ranking,
@@ -37,10 +37,10 @@
     return datas;
   }
 
- export async function writeData(data){
+ async function writeData(data){
   await addDoc(collection(db, "ranking"+(parseInt(data.level)+1)), {
     ...data
   });
-
-
   }
+
+  export {writeData, getRankingData}

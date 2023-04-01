@@ -101,7 +101,6 @@ body{
     font-size: 40px;
     text-align: center;
     color: royalblue;
-    margin: 50px 0px;
 }
 .start-btn, 
 .ranking-btn,
@@ -148,7 +147,7 @@ body{
    pointer-events: none;
 }
 .pause-btn{
-    background: url(../img/pauseBtn.png) no-repeat center / 30px;
+    background: url(../img/pauseBtn.png) no-repeat center / 35px;
     width: 70px;
     height: 50px;
 }
@@ -337,7 +336,7 @@ body{
     vertical-align: top;
 }
 .prev-btn{
-    background: url(../img/prevtBtn2.png) no-repeat center / 50px;
+    background: url(../img/prevBtn2.png) no-repeat center / 50px;
 }
 .next-btn{
     background: url(../img/nextBtn.png) no-repeat center / 50px;
@@ -372,9 +371,10 @@ body{
     top:50%;
     transform: translate(-50%,-50%);
     background-color: powderblue;
-    padding: 20px 20px 40px 20px;
+    padding: 30px 30px 40px 30px;
     border-radius: 10px;
     min-height: 300px;
+    min-width: 800px;
     display: none;
 }
 .modal-guide.active{
@@ -385,9 +385,13 @@ body{
     text-align: center;
     margin-bottom: 20px;
 }
+
 .guide-lists li{
+    margin-left: 20px;
+    list-style-type: '🎈';
     font-size: 18px;
     line-height: 2.5;
+    padding-left: 10px;
 }
 .gamestart.active{
     animation: slide 1s;
@@ -398,7 +402,57 @@ body{
 .modal-guide.active{
     animation: fadeIn 1s;
 }
+.game-titleCard{
+    display: inline-block;
+}
+.title-box{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.title-card{
+    position: relative;
+    width: 40px;
+    height: 60px;
+    perspective: 240px;
+}
+.title-card.left.flipped .titleCard-inner,
+.title-card.right.flipped .titleCard-inner{
+    transform: rotateY(180deg);
+}
+.titleCard-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
 
+}
+.titleCard-front, .titleCard-back{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 5px;
+}
+.titleCard-front{
+    background: url(../img/favicon.ico) no-repeat center / 25px;
+    background-color: aliceblue;
+}
+
+.titleCard-back{
+    transform:  rotateY(180deg);
+    background-color: salmon;
+}
+
+
+@keyframes rotaingCard {
+    to{
+      transform: rotateY(360deg);
+    }
+}
 @keyframes fadeIn{
    from{
     scale: 0.3;
