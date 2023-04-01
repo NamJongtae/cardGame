@@ -60,8 +60,8 @@ $levelNextBtn.addEventListener('click',()=>{
   totalCard = row * col;
   $levelNum.innerHTML = level===1 ? '보통' : '어려움';
   $levelNum.style.color = level ===1 ? "gold" : "red";
-  $levelNextBtn.style.backgroundImage =  `url('../src/img/nextBtn${level===1 ? "" : "2"}.png`;
-  $levelPrevBtn.style.backgroundImage =  `url('../src/img/prevBtn${level===1 ? "" : ""}.png`;
+  $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn${level===1 ? "" : "2"}.png`;
+  $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : ""}.png`;
 })
 $levelPrevBtn.addEventListener('click',()=>{
   if(level===0) return;
@@ -71,8 +71,8 @@ $levelPrevBtn.addEventListener('click',()=>{
   totalCard = row * col;
   $levelNum.innerHTML = level===0 ? '쉬움' : '보통';
   $levelNum.style.color = level ===0 ? "yellowgreen" : "gold";
-  $levelNextBtn.style.backgroundImage =  `url('../src/img/nextBtn.png')`;
-  $levelPrevBtn.style.backgroundImage =  `url('../src/img/prevBtn${level===1 ? "" : "2"}.png')`;
+  $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn.png')`;
+  $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : "2"}.png')`;
 })
 
 $gameGudieBtn.addEventListener('click',()=>{
@@ -99,9 +99,9 @@ function startGame() {
   $container.style.gridTemplateRows = `repeat(${col}, 120px)`;
   random(randomArray);
   random(randomArray2);
-  soundSetting(soundArray, "../audio/card_effect.mp3");
-  soundSetting(soundArray2, "../audio/card_effect2.mp3");
-  soundSetting(soundArray3, "../audio/card_effect3.wav");
+  soundSetting(soundArray, "./audio/card_effect.mp3");
+  soundSetting(soundArray2, "./audio/card_effect2.mp3");
+  soundSetting(soundArray3, "./audio/card_effect3.wav");
   playSound(soundArray);;
   $container.style.pointerEvents = "none";
   cardSetting();
