@@ -116,7 +116,8 @@
     vertical-align: top;
 }
 .prev-btn{
-    background: url(../img/prevBtnInactive.png) no-repeat center / 50px;
+    background: url(../img/prevBtn.png) no-repeat center / 50px;
+    opacity: 0.5;
 }
 .next-btn{
     background: url(../img/nextBtn.png) no-repeat center / 50px;

@@ -66,8 +66,8 @@ $levelNextBtn.addEventListener('click',()=>{
   totalCard = row * col;
   $levelNum.innerHTML = level===1 ? '보통' : '어려움';
   $levelNum.style.color = level ===1 ? "gold" : "red";
-  $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn${level===1 ? "" : "Inactive"}.png`;
-  $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : ""}.png`;
+  $levelNextBtn.style.opacity =  `${level===1 ? 1 : 0.5 }`;
+  $levelPrevBtn.style.opacity =  1;
 })
 
 // 이전(<-) 레벨 버튼 클릭 이벤트
@@ -79,8 +79,8 @@ $levelPrevBtn.addEventListener('click',()=>{
   totalCard = row * col;
   $levelNum.innerHTML = level===0 ? '쉬움' : '보통';
   $levelNum.style.color = level ===0 ? "yellowgreen" : "gold";
-  $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn.png')`;
-  $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : "Inactive"}.png')`;
+  $levelNextBtn.style.opacity =  1;
+  $levelPrevBtn.style.opacity =  `${level===1 ? 1 : 0.5 }`;
 })
 
 // 게임방법 버튼 클릭 이벤트
