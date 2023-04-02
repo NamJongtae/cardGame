@@ -26,7 +26,7 @@
     const ranking = collection(db, `ranking${level}`);
     const q = query(
       ranking,
-      orderBy("record", "asc"),
+      orderBy("record", "desc"),
       limit(100)
     );
     const res = await getDocs(q);
