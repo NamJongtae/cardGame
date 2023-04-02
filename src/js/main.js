@@ -1,4 +1,4 @@
-import { random,  randomArray, randomArray2, cardArray, completedCard, cardSetting} from "./card.js";
+import { shuffle,  randomCardArray1, randomCardArray2, cardArray, completedCardArray, cardSetting} from "./card.js";
 import { playSound,soundArray, soundArray2, soundArray3, bgm, soundSetting} from "./audio.js";
 import { startTime, setStartTime, totalTime, setTotalTime, setTotalPauseTime } from "./game.js";
 import { setRaking } from "./modal.js";
@@ -34,7 +34,9 @@ let checked = false;
 $body.onselectstart = ()=>{return false;} 
 $body.ondragstart = ()=>{return false;} 
 
-/* 메인 시작화면 관련 이벤트 함수*/
+/* 메인 시작화면 관련 이벤트 함수 */
+
+// 시작화면 제목 카드 클릭 이벤트 함수
 $titleCards.forEach(el=>el.addEventListener('click',clickTitleCard));
 function clickTitleCard() {
   this.classList.toggle("flipped");
@@ -50,8 +52,12 @@ function clickTitleCard() {
       $titlCardIneers[1].style.animation = '';
   }
 }
+
+// 게임시작 버튼 클릭 이벤트 
 $startBtn.addEventListener("click", startGame);
 
+
+// 다음(->) 레벨 버튼 클릭 이벤트
 $levelNextBtn.addEventListener('click',()=>{
   if(level===2) return;
   level++;
@@ -60,9 +66,11 @@ $levelNextBtn.addEventListener('click',()=>{
   totalCard = row * col;
   $levelNum.innerHTML = level===1 ? '보통' : '어려움';
   $levelNum.style.color = level ===1 ? "gold" : "red";
-  $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn${level===1 ? "" : "2"}.png`;
+  $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn${level===1 ? "" : "Inactive"}.png`;
   $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : ""}.png`;
 })
+
+// 이전(<-) 레벨 버튼 클릭 이벤트
 $levelPrevBtn.addEventListener('click',()=>{
   if(level===0) return;
   level--;
@@ -72,23 +80,28 @@ $levelPrevBtn.addEventListener('click',()=>{
   $levelNum.innerHTML = level===0 ? '쉬움' : '보통';
   $levelNum.style.color = level ===0 ? "yellowgreen" : "gold";
   $levelNextBtn.style.backgroundImage =  `url('./src/img/nextBtn.png')`;
-  $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : "2"}.png')`;
+  $levelPrevBtn.style.backgroundImage =  `url('./src/img/prevBtn${level===1 ? "" : "Inactive"}.png')`;
 })
 
+// 게임방법 버튼 클릭 이벤트
 $gameGudieBtn.addEventListener('click',()=>{
   $modalGameGuide.classList.toggle("active");
 })
+// 게임방법 닫기 버튼 이벤트
 $guideCloseBtn.addEventListener('click',()=>{
   $modalGameGuide.classList.toggle("active");
 })
 
-$rankCloseBtn.addEventListener('click',()=>{
-  $modalRank.classList.toggle("active");
-})
+// 랭킹보기 버튼 클릭 이벤트
 $rankingBtn.addEventListener('click',()=>{
   setRaking(1);
   $modalRank.classList.toggle("active");
 })
+// 랭킹보기 닫기 버튼 이벤트
+$rankCloseBtn.addEventListener('click',()=>{
+  $modalRank.classList.toggle("active");
+})
+
 /* // 메인 시작화면 관련 */
 
 // 게임시작 함수
@@ -97,30 +110,39 @@ function startGame() {
   $modal.classList.toggle("active");
   $container.style.gridTemplateColumns = `repeat(${row}, 150px)`;
   $container.style.gridTemplateRows = `repeat(${col}, 120px)`;
-  random(randomArray);
-  random(randomArray2);
+  shuffle(randomCardArray1);
+  shuffle(randomCardArray2);
   soundSetting(soundArray, "./audio/card_effect.mp3");
   soundSetting(soundArray2, "./audio/card_effect2.mp3");
   soundSetting(soundArray3, "./audio/card_effect3.wav");
-  playSound(soundArray);;
+  playSound(soundArray);
   $container.style.pointerEvents = "none";
-  cardSetting();
-  bgm.play();
   $pauseBtn.style.pointerEvents = 'none';
   $resetBtn.style.pointerEvents = 'none';
+  cardSetting();
+  bgm.play();
+
+  // 게임시작 후 카드를 보여주고 뒤집기 위해 0.8s 지연시킴
   setTimeout(() => {
-    let card = document.querySelectorAll(".card");
+    const $card = document.querySelectorAll(".card");
     playSound(soundArray2);
-    for (let i = 0; i < card.length; i++) {
-      card[i].classList.toggle("flipped"); // 카드 뒤집기
+
+     // 카드 뒤집기
+    for (let i = 0; i < $card.length; i++) {
+      $card[i].classList.toggle("flipped");
     }
-    $container.style.pointerEvents = "auto"; // 게임시작 클릭 제한 해제
+    $container.style.pointerEvents = "auto"; 
+
+    // 시작 시간 측정 
     setStartTime (new Date().getTime());
+
+    // 0.01초 마다 시간 체크 task queue 오차
     timeInterval = setInterval(() => {
       setTotalTime(((new Date().getTime() - startTime) / 1000).toFixed(2));
       $timer.innerHTML = Math.floor(totalTime);
     }, 10);
   }, 800);
+
   setTimeout(()=>{
     $pauseBtn.style.pointerEvents = 'auto';
     $resetBtn.style.pointerEvents = 'auto';
@@ -132,9 +154,9 @@ function resetGame() {
   bgm.pause();
   bgm.load();
   cardArray.splice(0);
-  completedCard.splice(0);
-  randomArray.splice(0);
-  randomArray2.splice(0);
+  completedCardArray.splice(0);
+  randomCardArray1.splice(0);
+  randomCardArray2.splice(0);
   setTotalTime(0);
   setTotalPauseTime (0);
   checked = false;
@@ -147,9 +169,12 @@ function resetGame() {
   $modal.classList.remove("active");
 }
 
+// timeinterval setting
 function setTimeInterval(interval) {
   timeInterval = interval
 }
+
+// checked setting
 function setChecked(){
   checked = !checked
 }

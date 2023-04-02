@@ -1,6 +1,6 @@
 /* 게임 진행중 화면 버튼 관련 이벤트 함수 */
 import { bgm } from "./audio.js";
-import { completedCard } from "./card.js";
+import { completedCardArray } from "./card.js";
 import { startGame, resetGame, timeInterval, totalCard, setTimeInterval } from "./main.js";
 
 const $startBtn = document.querySelector(".start-btn");
@@ -22,7 +22,7 @@ $loadBtn.addEventListener('click',()=>{
     clearInterval(timeInterval);
     $body.style.overflow = 'auto';
     $modal.classList.remove('active');
-    if(completedCard.length===totalCard) return;
+    if(completedCardArray.length===totalCard) return;
     bgm.play();
     endPauseTime = new Date().getTime();
     totalPauseTime += (endPauseTime - startPauseTime) 

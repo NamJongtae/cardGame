@@ -1,0 +1,353 @@
+/* 모달 wrapper */
+.modal-wrapper{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+}
+.modal-wrapper.active{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+/* // 모달 wrapper */
+
+/* 모달 닫기 버튼*/
+.close-btn{
+    border: 0;
+    background: none;
+    font-size: 30px;
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    cursor: pointer;
+}
+/* // 모달 닫기 버튼 */
+
+/* 게임시작 화면 모달 창 */
+/* 게임시작화면 제목 장식 카드 */
+.game-titleCard{
+    display: inline-block;
+}
+.title-box{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.title-card{
+    position: relative;
+    width: 40px;
+    height: 60px;
+    perspective: 240px;
+}
+.title-card.left.flipped .titleCard-inner,
+.title-card.right.flipped .titleCard-inner{
+    transform: rotateY(180deg);
+}
+.titleCard-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+
+}
+.titleCard-front, .titleCard-back{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 5px;
+}
+.titleCard-front{
+    background: url(../img/favicon.ico) no-repeat center / 25px;
+    background-color: aliceblue;
+}
+
+.titleCard-back{
+    transform:  rotateY(180deg);
+    background-color: salmon;
+}
+/* // 게임시작화면 제목 장식 카드 */
+.game-title{
+    font-size: 40px;
+    text-align: center;
+    color: royalblue;
+}
+.modal-wrapper.gamestart .button-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+.start-btn, 
+.ranking-btn,
+.load-btn,
+.gameGudie-btn{
+    padding: 15px 40px;
+    border-radius: 20px;
+    font-size: 40px;
+    font-weight: bold;
+    background-color: gold;
+    border: none;
+    cursor: pointer;
+}
+.load-btn{
+    display: none;
+}
+.level-box{
+    margin-bottom: 20px;
+}
+.level-box h2{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.level-box button{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: none;
+    vertical-align: top;
+}
+.prev-btn{
+    background: url(../img/prevBtnInactive.png) no-repeat center / 50px;
+}
+.next-btn{
+    background: url(../img/nextBtn.png) no-repeat center / 50px;
+}
+.level-box span{
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    font-size: 40px;
+    color: yellowgreen
+}
+/* // 게임시작 화면 모달 창 */
+
+/* 기록 모달창 */
+.modal-record{
+    position: absolute;
+    padding: 20px;
+    padding-bottom: 60px;
+    background-color: royalblue;
+    border-radius: 10px;
+    box-sizing: border-box;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.modal-record h2{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.modal-record h3{
+    font-size: 25px;
+    text-align: center;
+}
+.record-form{
+    margin-top: 20px;
+    text-align: center;
+}
+.modal-record label{
+    font-weight: bold;
+    display: inline-block;
+    width: 50px;
+}
+.modal-record input{
+    width: 80%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+.err-msg, .err-name{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: salmon;
+    display: none;
+}
+.err-name.active, .err-msg.active{
+    display: block;
+}
+.modal-record p {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+.recordBtn-box{
+    display: flex;
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    gap: 10px;
+}
+.recordBtn-box button{
+   padding: 3px;
+   cursor: pointer;
+   border: none;
+   background:none;
+   font-size: 16px;
+   border: 1px solid black;
+   border-radius: 10px;
+   padding: 10px 10px;
+   background-color: aliceblue
+}
+.recordBtn-box button:hover{
+    cursor: pointer;
+    background-color: gray;
+}
+/* // 기록 모달창 */
+
+/* 랭킹 모달창 */
+.modal-rank{
+    position: absolute;
+    background-color: #fff;
+    width: 1000px;
+    height: 800px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    padding: 20px;
+    box-sizing: border-box;
+    display: none;
+}
+.modal-rank.active{
+    display: block;
+}
+.modal-rank h2{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 30px;
+    
+}
+.modal-rank h3{
+    font-size: 30px;
+    display: inline-block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.lvBtn-box{
+    margin-bottom: 20px;
+    float: right;
+}
+.lvBtn-box button{
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: powderblue;
+    border: 0;
+    border-radius: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.ranking-table{
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+}
+.ranking-table th{
+    background-color: #eee;
+}
+.ranking-table tr,td,th {
+    border: 1px solid black;
+    font-size: 14px;
+    padding: 5px 0px;
+}
+.ranking-table th:nth-child(3){
+    width: 15%;
+}
+.ranking-table th:nth-child(4){
+    width: 40%;
+}
+.ranking-table th:nth-child(5){
+    width: 20%;
+}
+.ranking-table tr:not(:first-child) td:nth-child(5){
+    color: gray;
+}
+/* // 랭킹 모달창 */
+
+/* 게임방법 모달창 */
+.modal-guide{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    background-color: powderblue;
+    padding: 30px 30px 40px 30px;
+    border-radius: 10px;
+    min-height: 300px;
+    min-width: 800px;
+    display: none;
+}
+.modal-guide.active{
+    display: block;
+}
+.guide-title{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.guide-lists li{
+    margin-left: 20px;
+    list-style-type: '🎈';
+    font-size: 18px;
+    line-height: 2.5;
+    padding-left: 10px;
+}
+/* // 게임방법 모달창 */
+
+/* 모달창 열림 애니메이션 설정 */
+.gamestart.active{
+    animation: slide 1s;
+}
+.modal-rank.active{
+    animation: fadeIn 1s;
+}
+.modal-guide.active{
+    animation: fadeIn 1s;
+}
+/* // 모달창 열림 애니메이션 설정 */
+
+/* 애니메이션 */
+@keyframes rotaingCard {
+    to{
+      transform: rotateY(360deg);
+    }
+}
+@keyframes fadeIn{
+   from{
+    scale: 0.3;
+   }
+}
+@keyframes fadeOut{
+    from{
+        opacity: 1;
+        scale: 1;
+    }
+    to{
+        opacity: 0;
+        scale: 0;
+    }
+}
+@keyframes slide {
+    from{
+        transform:  translateY(-100%);
+    }
+    to{
+        transform:  translateY(0%);
+    }
+}
+/* // 애니메이션 */
