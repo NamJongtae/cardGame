@@ -142,6 +142,7 @@
     top: 30%;
     left: 50%;
     transform: translate(-50%,-50%);
+    min-width: 400px;
 }
 .modal-record h2{
     font-size: 30px;
