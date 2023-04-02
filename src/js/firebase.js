@@ -20,14 +20,13 @@
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
   const db = getFirestore(app);
 
   async function getRankingData(level) {
     const ranking = collection(db, `ranking${level}`);
     const q = query(
       ranking,
-      orderBy("record", "desc"),
+      orderBy("record", "asc"),
       limit(100)
     );
     const res = await getDocs(q);
