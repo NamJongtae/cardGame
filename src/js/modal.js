@@ -36,7 +36,7 @@ $recordCancelBtn.addEventListener("click",()=>{
     }
 
     // 파이어베이스 데이터 전송
-    const data = {name:$inputName.value, record: parseFloat(totalTime), message: $inputMsg.value, createdAt: new Date(), level}
+    const data = {name:$inputName.value, record: parseFloat(totalTime).toFixed(2), message: $inputMsg.value, createdAt: new Date(), level}
     writeData(data).then(()=>{
       $inputName.value = "";
       $inputMsg.value = "";
