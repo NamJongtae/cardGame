@@ -1,131 +1,162 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="CardGame" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="mycardgame.shop" />
-    <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/cardgame-2eb81.appspot.com/o/og%2Fcard-game.png?alt=media&token=fce8c75e-1739-4ed5-9de4-b4cd0d12cb21" />
-    <meta property="og:description" content="카드 짝 맞추기 게임 입니다. 기록에 도전해보세요." />
-  <title>CardGame</title>
-  <link rel="stylesheet" href="./src/css/style.css">
-  <link rel="stylesheet" href="./src/css/modal.css">
-  <link rel="icon" href="./src/img/favicon.ico">
-</head>
-<body>
-  <div class="timer-box">⏰ Time : <span>0</span></div>
-  <div class="gameBtn-box">
-    <button class="audioBtn" type="button"></button>
-    <button class="reset-btn" type="button"></button>
-    <button class="pause-btn" type="button"></button>
-  </div>
-  <div class="container">
-    <!--card-->
-  </div>
-  <div class="modal-wrapper gamestart active">
-    <div class="title-box">
-    <div class="title-card left flipped">
-      <div class="titleCard-inner">
-        <div class="titleCard-front">
+    <meta
+      property="og:image"
+      content="https://firebasestorage.googleapis.com/v0/b/cardgame-2eb81.appspot.com/o/og%2Fcard-game.png?alt=media&token=fce8c75e-1739-4ed5-9de4-b4cd0d12cb21"
+    />
+    <meta
+      property="og:description"
+      content="카드 짝 맞추기 게임 입니다. 기록에 도전해보세요."
+    />
+    <title>CardGame</title>
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link rel="stylesheet" href="./src/css/modal.css" />
+    <link rel="icon" href="./src/img/favicon.ico" />
+  </head>
+  <body>
+    <div class="timer-box">⏰ Time : <span>0</span></div>
+    <div class="gameBtn-box">
+      <button class="audioBtn" type="button"></button>
+      <button class="reset-btn" type="button"></button>
+      <button class="pause-btn" type="button"></button>
+    </div>
+    <div class="container">
+      <!--card-->
+    </div>
+    <div class="modal-wrapper gamestart active">
+      <div class="title-box">
+        <div class="title-card left flipped">
+          <div class="titleCard-inner">
+            <div class="titleCard-front"></div>
+            <div class="titleCard-back"></div>
+          </div>
         </div>
-        <div class="titleCard-back">
+        <h1 class="game-title">카드 짝 맞추기</h1>
+        <div class="title-card right flipped">
+          <div class="titleCard-inner">
+            <div class="titleCard-front"></div>
+            <div class="titleCard-back"></div>
+          </div>
         </div>
       </div>
-    </div>
-    <h1 class="game-title">
-       카드 짝 맞추기
-    </h1>
-    <div class="title-card right flipped">
-      <div class="titleCard-inner">
-        <div class="titleCard-front">
+      <div class="button-box">
+        <div class="level-box">
+          <h2>난이도 선택</h2>
+          <button class="prev-btn"></button>
+          <span class="level">쉬움</span>
+          <button class="next-btn"></button>
         </div>
-        <div class="titleCard-back">
-        </div>
+        <button class="start-btn">게임시작</button>
+        <button class="ranking-btn">랭킹보기</button>
+        <button class="load-btn">이어하기</button>
+        <button class="gameGudie-btn">게임방법</button>
       </div>
     </div>
-  </div>
-    <div class="button-box">
-    <div class="level-box">
-      <h2>난이도 선택</h2>
-      <button class="prev-btn"></button>
-      <span class="level">쉬움</span>
-      <button class="next-btn"></button>
-    </div>
-    <button class="start-btn">게임시작</button>
-    <button class="ranking-btn">랭킹보기</button>
-    <button class="load-btn">이어하기</button>
-    <button class="gameGudie-btn">게임방법</button>
-  </div>
-  </div>
-  <div class="modal-rank">
-    <h2>🏆 기록순위 Top100</h2>
-    <button class="close-btn">X</button>
-    <h3 class="rankTitle-level">😀 쉬움</h3>
-    <div class="lvBtn-box">
-      <button class="lv1-btn">쉬움</button>
-      <button class="lv2-btn">보통</button>
-      <button class="lv3-btn">어려움</button>
-    </div>
-    <table class="ranking-table">
-      <tbody class="ranking-tbody">
-        <tr>
-          <th>순위</th>
-          <th>기록</th>
-          <th>이름</th>
-          <th>메세지</th>
-          <th>날짜</th>
-        </tr>
+    <div class="modal-rank">
+      <h2>🏆 기록순위 Top100</h2>
+      <button class="close-btn">X</button>
+      <h3 class="rankTitle-level">😀 쉬움</h3>
+      <div class="lvBtn-box">
+        <button class="lv1-btn">쉬움</button>
+        <button class="lv2-btn">보통</button>
+        <button class="lv3-btn">어려움</button>
+      </div>
+      <table class="ranking-table">
+        <tbody class="ranking-tbody">
+          <tr>
+            <th>순위</th>
+            <th>기록</th>
+            <th>이름</th>
+            <th>메세지</th>
+            <th>날짜</th>
+          </tr>
           <!--rankingData -->
-      </tbody>
-    </table>
-  </div>
-
-  <div class="modal-guide">
-    <h2 class="guide-title">🎮 게임방법</h2>
-    <ul class="guide-lists">
-      <li>카드를 클릭하여 카드 2개의 짝을 맞추는 게임입니다.</li>
-      <li>모든 카드의 짝을 맞추면 게임이 종료되고 시간이 기록됩니다.</li>
-      <li>게임시작 전 난이도를 고를 수 있으며, 쉬움, 보통, 어려움 3가지 난이도가 존재합니다.</li>
-      <li>게임 진행중 정지 버튼을 누르면 시작화면으로 돌아가고, 게임이 일시정지 됩니다.</li>
-      <li>같은 난이도로 게임을 다시 하고 싶다면 게임화면에서 다시하기 버튼(회전 화살표)을 누르면 됩니다.</li>
-      <li>정지 버튼을 눌러 시작화면으로 돌아가 난이도 변경하여 다시 플레이 할 수 있습니다.</li>
-      <li>스피커 버튼을 누르면 소리를 끄고, 켤 수 있습니다.</li>
-    </ul>
-    <button class="close-btn">X</button>
-  </div>
-
-  <div class="modal-wrapper record">
-    <div class="modal-record">
-      <h2>✨ 게임결과</h2>
-      <h3>⏰ 총 기록 : <strong class="time-record">0</strong>초 </h3>
-      <p>기록 등록을 원하신다면 정보 입력 후<br>
-        확인을 눌러주세요.</p>
-      <form class="record-form">
-        <div>
-          <label for="input-name" class="a11y">이름</label>
-          <input class="input-name" type="text" placeholder="이름" maxlength="5" id="input-name">
-          <span class="err-name">이름을 입력해주세요.</span>
-        </div>
-        <div>
-          <label for="input-msg" class="a11y">한 줄 메세지</label>
-          <input
-            class="input-msg"
-            type="text"
-            placeholder="한 줄 메세지"
-            maxlength="20"
-            id="input-msg"
-          >
-          <span class="err-msg">메세지를 입력해주세요.</span>
-        </div>
-        <div class="recordBtn-box">
-          <button class="record-btn" type="button">확인</button>
-          <button class="cancel-btn" type="button">취소</button>
-        </div>
-      </form>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <script type="module" src="./src/js/main.js"></script> 
-</body>
+
+    <div class="modal-guide">
+      <h2 class="guide-title">🎮 게임방법</h2>
+      <ul class="guide-lists">
+        <li>카드를 클릭하여 카드 2개의 짝을 맞추는 게임입니다.</li>
+        <li>모든 카드의 짝을 맞추면 게임이 종료되고 시간이 기록됩니다.</li>
+        <li>
+          게임시작 전 난이도를 고를 수 있으며, 쉬움, 보통, 어려움 3가지 난이도가
+          존재합니다.
+        </li>
+        <li>
+          게임 진행중 정지 버튼을 누르면 시작화면으로 돌아가고, 게임이 일시정지
+          됩니다.
+        </li>
+        <li>
+          같은 난이도로 게임을 다시 하고 싶다면 게임화면에서 다시하기 버튼(회전
+          화살표)을 누르면 됩니다.
+        </li>
+        <li>
+          정지 버튼을 눌러 시작화면으로 돌아가 난이도 변경하여 다시 플레이 할 수
+          있습니다.
+        </li>
+        <li>스피커 버튼을 누르면 소리를 끄고, 켤 수 있습니다.</li>
+      </ul>
+      <button class="close-btn">X</button>
+    </div>
+
+    <div class="modal-wrapper record">
+      <div class="modal-record">
+        <h2>✨ 게임결과</h2>
+        <h3>⏰ 총 기록 : <strong class="time-record">0</strong>초</h3>
+        <p>
+          기록 등록을 원하신다면 정보 입력 후<br />
+          확인을 눌러주세요.
+        </p>
+        <form class="record-form">
+          <div>
+            <label for="input-name" class="a11y">이름</label>
+            <input
+              class="input-name"
+              type="text"
+              placeholder="이름"
+              maxlength="5"
+              id="input-name"
+            />
+            <span class="err-name">이름을 입력해주세요.</span>
+          </div>
+          <div>
+            <label for="input-msg" class="a11y">한 줄 메세지</label>
+            <input
+              class="input-msg"
+              type="text"
+              placeholder="한 줄 메세지"
+              maxlength="20"
+              id="input-msg"
+            />
+            <span class="err-msg">메세지를 입력해주세요.</span>
+          </div>
+          <div class="recordBtn-box">
+            <button class="record-btn" type="button">확인</button>
+            <button class="cancel-btn" type="button">취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      function preloading(imageArray) {
+        let n = imageArray.length;
+        for (let i = 0; i < n; i++) {
+          let img = new Image();
+          img.src = imageArray[i];
+        }
+      }
+
+      preloading(["./src/img/card_back.png", "./src/img/muteBtn.png"]);
+    </script>
+    <script type="module" src="./src/js/main.js"></script>
+  </body>
 </html>

@@ -5,8 +5,10 @@ import { setRaking } from "./modal.js";
 
 const $body = document.querySelector("body");
 const $container = document.querySelector(".container");
-const $timer = document.querySelector(".timer-box span");
-const $startBtn = document.querySelector(".start-btn");
+const $timerBox = document.querySelector(".timer-box");
+const $timer = $timerBox.querySelector(".timer-box span");
+const $gameBtnBox = document.querySelector(".gameBtn-box");
+const $startBtn =  document.querySelector(".start-btn");
 const $modal = document.querySelector(".modal-wrapper.gamestart");
 const $resetBtn = document.querySelector(".reset-btn");
 const $levelPrevBtn = document.querySelector(".level-box .prev-btn");
@@ -23,7 +25,7 @@ const $titleCards  = document.querySelectorAll(".title-card");
 const $titlCardIneers = document.querySelectorAll(".titleCard-inner");
 
 /* 카드 행 열 지정 곱 => 짝수만 가능 홀수 시 짝이 안맞음 너무 큰 수를 지정하면 화면에서 벗어남 */ 
-const levelData = [{row:"4",col:"3",}, {row:"5",col:"4"},{row:'6',col:"5"}];
+const levelData = [{row:"4",col:"3",}, {row:"4",col:"4"},{row:'5',col:"4"}];
 let level = 0;
 let row = levelData[level].row;
 let col = levelData[level].col;
@@ -34,8 +36,11 @@ let checked = false;
 $body.onselectstart = ()=>{return false;} 
 $body.ondragstart = ()=>{return false;} 
 
-/* 메인 시작화면 관련 이벤트 함수 */
+soundSetting(soundArray, "./audio/card_effect.mp3");
+soundSetting(soundArray2, "./audio/card_effect2.mp3");
+soundSetting(soundArray3, "./audio/card_effect3.wav");
 
+/* 메인 시작화면 관련 이벤트 함수 */
 // 시작화면 제목 카드 클릭 이벤트 함수
 $titleCards.forEach(el=>el.addEventListener('click',clickTitleCard));
 function clickTitleCard() {
@@ -106,33 +111,39 @@ $rankCloseBtn.addEventListener('click',()=>{
 
 // 게임시작 함수
 function startGame() {
+  bgm.play();
+  $timerBox.classList.add("active");
+  $gameBtnBox.classList.add("active");
   $body.style.overflow = 'auto';
   $modal.classList.toggle("active");
   $container.style.gridTemplateColumns = `repeat(${row}, 150px)`;
   $container.style.gridTemplateRows = `repeat(${col}, 120px)`;
   shuffle(randomCardArray1);
   shuffle(randomCardArray2);
-  soundSetting(soundArray, "./audio/card_effect.mp3");
-  soundSetting(soundArray2, "./audio/card_effect2.mp3");
-  soundSetting(soundArray3, "./audio/card_effect3.wav");
   playSound(soundArray);
   $container.style.pointerEvents = "none";
   $pauseBtn.style.pointerEvents = 'none';
   $resetBtn.style.pointerEvents = 'none';
   cardSetting();
-  bgm.play();
 
-  // 게임시작 후 카드를 보여주고 뒤집기 위해 0.8s 지연시킴
+  const $card = document.querySelectorAll(".card");
+  for (let i = 0; i < $card.length; i++) {
+    // 카드를 하나씩 뒤집히는 효과를 주기 위해 지연
+    setTimeout(()=>{
+      $card[i].classList.add("flipped");
+      playSound(soundArray);
+    }, 1500 + 125 * i)
+    // 카드가 모두 뒤집힌 뒤 카드를 2초 동안 보여주고 뒤집음
+    setTimeout(() => {
+      $card[i].classList.remove("flipped");
+    }, 1500 + 1000 + 125 * totalCard);
+  }
   setTimeout(() => {
-    const $card = document.querySelectorAll(".card");
     playSound(soundArray2);
-
      // 카드 뒤집기
-    for (let i = 0; i < $card.length; i++) {
-      $card[i].classList.toggle("flipped");
-    }
     $container.style.pointerEvents = "auto"; 
-
+    $pauseBtn.style.pointerEvents = 'auto';
+    $resetBtn.style.pointerEvents = 'auto';
     // 시작 시간 측정 
     setStartTime (new Date().getTime());
 
@@ -141,12 +152,7 @@ function startGame() {
       setTotalTime(((new Date().getTime() - startTime) / 1000).toFixed(2));
       $timer.innerHTML = Math.floor(totalTime);
     }, 10);
-  }, 800);
-
-  setTimeout(()=>{
-    $pauseBtn.style.pointerEvents = 'auto';
-    $resetBtn.style.pointerEvents = 'auto';
-},1000)
+  }, 1500 + 1000 + 125 * totalCard);
 }
 
 // 게임 리셋 함수
@@ -178,5 +184,7 @@ function setTimeInterval(interval) {
 function setChecked(){
   checked = !checked
 }
+
+
 
 export { totalCard, timeInterval, totalTime, checked, level, setChecked, resetGame, startGame, setTimeInterval}

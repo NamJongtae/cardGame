@@ -54,6 +54,7 @@ ul,li{
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    transform: rotateY(180deg);
 }
 .card-front{
     width: 100%;
@@ -64,7 +65,7 @@ ul,li{
     font-size: 60px;
 }
 .card.flipped .card-inner{
-    transform: rotateY(180deg);
+    transform: rotateY(0deg);
 }
 .card-front, .card-back{
     position: absolute;
